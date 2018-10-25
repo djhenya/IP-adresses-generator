@@ -62,19 +62,19 @@ class Window(QtGui.QWidget):
 	self.setLayout(layout)
 
     def launchscreen (self):
-	global counter
-	cur = con.cursor()
-	if cur.execute('select * from network').fetchall() == []: counter=1
-	else:
-	    cur_array = []
-	    cur.execute('select * from network')
-	    for i in cur:
-		cur_array.append(i)
-	    counter = int(cur_array[len(cur_array)-1][0])+1
-	    model = MyTable(cur_array)
-	    self.table.setModel(model)
-	    self.table.resizeColumnsToContents()
-	del cur
+		global counter
+		cur = con.cursor()
+		if cur.execute('select * from network').fetchall() == []: counter=1
+		else:
+			cur_array = []
+			cur.execute('select * from network')
+			for i in cur:
+				cur_array.append(i)
+				counter = int(cur_array[len(cur_array)-1][0])+1
+			model = MyTable(cur_array)
+			self.table.setModel(model)
+			self.table.resizeColumnsToContents()
+		del cur
 
 #    def show_hosts_init(self, MyTable):
 #	self.HostsWindow.setWindowTitle(u'Список хостов')
@@ -353,6 +353,8 @@ def add_to_database(obj):
 	obj.table.resizeColumnsToContents()
 	counter += 1
   finally: del cur
+
+
 
 
 app = QtGui.QApplication(sys.argv)
