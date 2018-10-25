@@ -1,1 +1,0 @@
-/usr/sbin/useradd -r -s /bin/false -p `openssl passwd -1 $PWD` $USER
