@@ -61,7 +61,7 @@ class Window(QtGui.QWidget):
 		layout.addWidget(self.list_of_hosts)
 		self.setLayout(layout)
 
-    def launchscreen (self):
+    def launchscreen(self):
 		global counter
 		cur = con.cursor()
 		if cur.execute('select * from network').fetchall() == []: counter=1
@@ -94,117 +94,117 @@ class Window(QtGui.QWidget):
 
     def show_hosts(self, MyTable):
 
-	indexes = MyTable.selectedIndexes()
-	if not indexes: return
-	MyTable.selectRow(indexes[0].row())
-	indexes = MyTable.selectedIndexes()
-	a = indexes[3].data()
-	poolsize = (a.toInt())[0]
-	adr = indexes[1].data()
-	adr = adr.toString()
+		indexes = MyTable.selectedIndexes()
+		if not indexes: return
+		MyTable.selectRow(indexes[0].row())
+		indexes = MyTable.selectedIndexes()
+		a = indexes[3].data()
+		poolsize = (a.toInt())[0]
+		adr = indexes[1].data()
+		adr = adr.toString()
 
-        adr = adr.split('.')
-	s = [0, 0, 0, 0]
-	ss = [0, 0, 0, 0]
-	for q in range(4):
-	    s[q] = int(adr[q])
-	hh = []
+		adr = adr.split('.')
+		s = [0, 0, 0, 0]
+		ss = [0, 0, 0, 0]
+		for q in range(4):
+			s[q] = int(adr[q])
+		hh = []
 
-	for i in range(4):
+		for i in range(4):
 
-		if poolsize == 1:
-		    if i == 0:
-			for j in range(4):
-			    ss[j] = str(s[j])
-			hh.append(".".join(ss))
-#			cur.execute('update network set netadress=? where n=?', (".".join(ss), counter,))
-			break
-		    else:
-			s[3-i+1]=0
-			for j in range(4):
-			    ss[j] = str(s[j])
-#			cur.execute('update network set netadress=? where n=?', (".".join(ss), counter,))
-			for w in range(256):
-			    if i>1:
-				s[3-i+2]=0
-				for e in range(256):
-				 if i>2:
-				    s[3-i+3]=0
-				    for r in range(256):
-				      for j in range(4):
-				        ss[j] = str(s[j])
-				      hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
-				      s[3-i+3] += 1
-				 else:
-				  for j in range(4):
-				    ss[j] = str(s[j]) 
-				  hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
-				 s[3-i+2] += 1
-			    else:
-			     for j in range(4):
-				ss[j] = str(s[j])
-			     hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
-			    s[3-i+1] += 1
-			hh.pop(0)
-			hh.pop()
-			break
-
-		elif poolsize > 255:
-		    poolsize /= 256
-		    s[3-i] = 0
-		    continue
-
-		elif poolsize > 1 and poolsize < 256:
-		    s[3-i]-=s[3-i]%poolsize
-		    for j in range(4):
-			ss[j] = str(s[j])
-#		    cur.execute('update network set netadress=? where n=?', (".".join(ss),counter,))
-		    for q in range(1,poolsize+1):
-			if i>0:
-			    s[3-i+1]=0
-			    for w in range(256):
-				if i>1:
-				    s[3-i+2]=0
-				    for e in range(256):
-				      if i>2:
-					s[3-i+3]=0
-					for r in range(256):
-					  for j in range(4):
-					    ss[j] = str(s[j])
-					    hh.append(".".join(ss)) #cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
-					  s[3-i+3] += 1
-				      else:
+			if poolsize == 1:
+				if i == 0:
 					for j in range(4):
-					    ss[j] = str(s[j])
-					hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
-				      s[3-i+2] += 1
+						ss[j] = str(s[j])
+						hh.append(".".join(ss))
+		#			cur.execute('update network set netadress=? where n=?', (".".join(ss), counter,))
+					break
 				else:
-				 for j in range(4):
-				    ss[j] = str(s[j])
-				 hh.append(".".join(ss)) #cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
-				s[3-i+1] += 1
-			else:
-			 for j in range(4):
-			    ss[j] = str(s[j])
-			 hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
-			s[3-i]+=1
-		    hh.pop(0)
-		    hh.pop()
-		    break
+					s[3-i+1]=0
+					for j in range(4):
+						ss[j] = str(s[j])
+		#			cur.execute('update network set netadress=? where n=?', (".".join(ss), counter,))
+				for w in range(256):
+					if i>1:
+						s[3-i+2]=0
+					for e in range(256):
+					if i>2:
+						s[3-i+3]=0
+						for r in range(256):
+							for j in range(4):
+								ss[j] = str(s[j])
+						hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
+						s[3-i+3] += 1
+					else:
+					for j in range(4):
+						ss[j] = str(s[j]) 
+					hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
+					s[3-i+2] += 1
+					else:
+					for j in range(4):
+					ss[j] = str(s[j])
+					hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
+					s[3-i+1] += 1
+				hh.pop(0)
+				hh.pop()
+				break
 
-#	hosts = []
-#	cur = con.cursor()
-#	cur.execute('select host from hosts where n=?', (d[0],))
-#	for h in cur:
-#	    hosts.append(h)
-	model = MyList(hh)
-	self.list_of_hosts.setModel(model)
-#	del cur
+			elif poolsize > 255:
+				poolsize /= 256
+				s[3-i] = 0
+				continue
 
-#	self.lines.setText(u'Адреса:\n\t')
-#	for i in range (len(hosts)):
-#	    self.lines.setText(self.lines.text() + '\n\t %s'%hosts[i])
-#	self.lines.adjustSize()
+			elif poolsize > 1 and poolsize < 256:
+				s[3-i]-=s[3-i]%poolsize
+				for j in range(4):
+				ss[j] = str(s[j])
+	#		    cur.execute('update network set netadress=? where n=?', (".".join(ss),counter,))
+				for q in range(1,poolsize+1):
+				if i>0:
+					s[3-i+1]=0
+					for w in range(256):
+					if i>1:
+						s[3-i+2]=0
+						for e in range(256):
+						if i>2:
+						s[3-i+3]=0
+						for r in range(256):
+						for j in range(4):
+							ss[j] = str(s[j])
+							hh.append(".".join(ss)) #cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
+						s[3-i+3] += 1
+						else:
+						for j in range(4):
+							ss[j] = str(s[j])
+						hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
+						s[3-i+2] += 1
+					else:
+					for j in range(4):
+						ss[j] = str(s[j])
+					hh.append(".".join(ss)) #cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
+					s[3-i+1] += 1
+				else:
+				for j in range(4):
+					ss[j] = str(s[j])
+				hh.append(".".join(ss))#cur.execute('insert into hosts values(?, ?)', (counter,".".join(ss),))
+				s[3-i]+=1
+				hh.pop(0)
+				hh.pop()
+				break
+
+	#	hosts = []
+	#	cur = con.cursor()
+	#	cur.execute('select host from hosts where n=?', (d[0],))
+	#	for h in cur:
+	#	    hosts.append(h)
+		model = MyList(hh)
+		self.list_of_hosts.setModel(model)
+	#	del cur
+
+	#	self.lines.setText(u'Адреса:\n\t')
+	#	for i in range (len(hosts)):
+	#	    self.lines.setText(self.lines.text() + '\n\t %s'%hosts[i])
+	#	self.lines.adjustSize()
 
 class MyTable(QtCore.QAbstractTableModel):
     def __init__ (self, fromdb, parent=None, *args):
